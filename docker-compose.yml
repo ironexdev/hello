@@ -2,11 +2,34 @@ version: "3.9"
 
 services:
   nginx:
-    image: ironex/hello
+    image: ironex/nginx
     networks:
       - frontend
     ports:
       - 80:80
+    volumes:
+    - var:/app/var
+
+  php-fpm:
+    image: ironex/php-fpm
+    networks:
+      - backend
+      - frontend
+    volumes:
+    - var:/app/var
+    - vendor:/app/vendor
+
+  composer:
+    image: ironex/composer
+    networks:
+      - backend
+    volumes:
+    - vendor:/app/vendor
 
 networks:
+  backend:
   frontend:
+
+volumes:
+  var:
+  vendor:
