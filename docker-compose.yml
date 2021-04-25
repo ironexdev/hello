@@ -20,6 +20,9 @@ services:
     - vendor:/app/vendor
 
   composer:
+    deploy:
+      restart_policy:
+        condition: none
     image: ironex/composer
     networks:
       - backend
