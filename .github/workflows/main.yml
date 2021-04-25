@@ -23,7 +23,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build and push ironex/nginx
-        id: docker_build_ironex/nginx
+        id: docker_build_ironex_nginx
         uses: docker/build-push-action@v2
         with:
           context: ./
@@ -32,7 +32,7 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:latest      
 
       - name: Build and push ironex/php-fpm
-        id: docker_build_ironex/php-fpm
+        id: docker_build_ironex_php-fpm
         uses: docker/build-push-action@v2
         with:
           context: ./
@@ -41,7 +41,7 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php-fpm:latest   
           
       - name: Build and push ironex/composer
-        id: docker_build_ironex/composer
+        id: docker_build_ironex_composer
         uses: docker/build-push-action@v2
         with:
           context: ./
