@@ -8,7 +8,7 @@ services:
     ports:
       - 80:80
     volumes:
-    - ./app/var:/app/var
+    - var:/app/var
 
   php-fpm:
     image: ironex/php-fpm
@@ -16,18 +16,23 @@ services:
       - backend
       - frontend
     volumes:
-    - ./app/var:/app/var
-    - ./app/vendor:/app/vendor
+    - var:/app/var
+    - vendor:/app/vendor
 
   composer:
+    deploy:
+      restart_policy:
+        condition: none
     image: ironex/composer
     networks:
       - backend
     volumes:
-    - ./app/vendor:/app/vendor
-  mysql:
-
+    - vendor:/app/vendor
 
 networks:
   backend:
   frontend:
+
+volumes:
+  var:
+  vendor:
