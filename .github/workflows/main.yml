@@ -53,6 +53,14 @@ jobs:
           file: ./etc/mysql/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mysql:latest
+          
+      - name: Build and push ironex/adminer
+        id: docker_build_ironex_adminer
+        uses: docker/build-push-action@v2
+        with:
+          file: ./etc/adminer/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/adminer:latest          
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

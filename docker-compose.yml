@@ -21,13 +21,31 @@ services:
 
   composer:
     image: ironex/composer
-    networks:
-      - backend
     volumes:
     - ./app/vendor:/app/vendor
-  mysql:
 
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
+    image: ironex/mysql
+    networks:
+      - backend
+    ports:
+      - 3306:3306
+    volumes:
+      - hello_mysql:/var/lib/mysql
+
+  adminer:
+    image: ironex/adminer
+    networks:
+      - frontend
+      - backend
+    ports:
+      - 8080:8080
 
 networks:
   backend:
   frontend:
+
+volumes:
+  hello_mysql:
