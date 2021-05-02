@@ -2,50 +2,51 @@ version: "3.9"
 
 services:
   nginx:
-    image: ironex/nginx
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./etc/nginx/Dockerfile
     networks:
       - frontend
     ports:
       - 80:80
+      - 443:443
+    platform: linux/amd64
     volumes:
-    - ./app/var:/app/var
+      - ./app:/app
+      - ./etc/nginx/development/ssl:/etc/ssl
+      - ./etc/nginx/development/default.conf:/etc/nginx/conf.d/default.conf
 
   php-fpm:
-    image: ironex/php-fpm
+    container_name: php-fpm
+    build:
+      context: .
+      dockerfile: ./etc/php-fpm/Dockerfile
     networks:
       - backend
       - frontend
+    platform: linux/amd64
     volumes:
-    - ./app/var:/app/var
-    - ./app/vendor:/app/vendor
-
-  composer:
-    image: ironex/composer
-    volumes:
-    - ./app/vendor:/app/vendor
+      - ./app:/app
 
   mysql:
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
-    image: ironex/mysql
+    build:
+      context: .
+      dockerfile: ./etc/mysql/Dockerfile
     networks:
       - backend
+    platform: linux/amd64
     ports:
       - 3306:3306
     volumes:
-      - hello_mysql:/var/lib/mysql
-
-  adminer:
-    image: ironex/adminer
-    networks:
-      - frontend
-      - backend
-    ports:
-      - 8080:8080
+      - mysql:/var/lib/mysql
 
 networks:
   backend:
   frontend:
 
 volumes:
-  hello_mysql:
+  mysql:

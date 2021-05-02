@@ -7,6 +7,8 @@ services:
       - frontend
     ports:
       - 80:80
+      - 443:443
+    platform: linux/amd64
     volumes:
     - var:/app/var
 
@@ -15,19 +17,22 @@ services:
     networks:
       - backend
       - frontend
+    platform: linux/amd64
     volumes:
     - var:/app/var
     - vendor:/app/vendor
 
-  composer:
-    deploy:
-      restart_policy:
-        condition: none
-    image: ironex/composer
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
+      image: ironex/mysql
     networks:
       - backend
+    platform: linux/amd64
+    ports:
+      - 3306:3306
     volumes:
-    - vendor:/app/vendor
+      - mysql:/var/lib/mysql
 
 networks:
   backend:
