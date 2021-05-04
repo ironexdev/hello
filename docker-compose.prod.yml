@@ -8,20 +8,22 @@ services:
     ports:
       - 80:80
       - 443:443
+    restart: on-failure
     volumes:
       - var:/app/var
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
 
   php-fpm:
+    depends_on:
+      - nginx
     image: ironex/php-fpm
     networks:
       - backend
       - frontend
+    restart: on-failure
     volumes:
       - var:/app/var
-    depends_on:
-      - nginx
 
   mysql:
     environment:
@@ -31,27 +33,29 @@ services:
       - backend
     ports:
       - 3306:3306
+    restart: on-failure
     volumes:
       - mysql:/var/lib/mysql
 
   composer:
+    depends_on:
+      - php-fpm
     image: ironex/composer
     networks:
       - backend
+    restart: on-failure
     volumes:
       - ./app:/app
-    depends_on:
-      - php-fpm
 
   certbot:
+    depends_on:
+      - nginx
     image: ironex/certbot
     networks:
       - frontend
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-    depends_on:
-      - nginx
 
 networks:
   backend:
