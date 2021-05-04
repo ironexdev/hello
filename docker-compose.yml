@@ -2,10 +2,12 @@ version: "3.9"
 
 services:
   nginx:
-    container_name: nginx
     build:
       context: .
       dockerfile: ./etc/nginx/Dockerfile
+    container_name: nginx
+    depends_on:
+      - php-fpm
     networks:
       - frontend
     ports:
@@ -26,16 +28,14 @@ services:
       - frontend
     volumes:
       - ./app:/app
-    depends_on:
-      - nginx
 
   mysql:
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
     build:
       context: .
       dockerfile: ./etc/mysql/Dockerfile
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
     networks:
       - backend
     ports:
@@ -44,16 +44,16 @@ services:
       - mysql:/var/lib/mysql
 
   composer:
-    container_name: composer
     build:
       context: .
       dockerfile: ./etc/composer/Dockerfile
+    container_name: composer
+    depends_on:
+      - php-fpm
     networks:
       - backend
     volumes:
       - ./app:/app
-    depends_on:
-      - php-fpm
 
 networks:
   backend:

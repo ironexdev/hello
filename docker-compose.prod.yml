@@ -2,6 +2,8 @@ version: "3.9"
 
 services:
   nginx:
+    depends_on:
+      - php-fpm
     image: ironex/nginx
     networks:
       - frontend
@@ -15,8 +17,6 @@ services:
       - certbot-var:/var/lib/letsencrypt
 
   php-fpm:
-    depends_on:
-      - nginx
     image: ironex/php-fpm
     networks:
       - backend
