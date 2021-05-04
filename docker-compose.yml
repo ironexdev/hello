@@ -11,7 +11,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    platform: linux/amd64
     volumes:
       - ./app:/app
       - ./etc/nginx/development/ssl:/etc/ssl
@@ -25,7 +24,6 @@ services:
     networks:
       - backend
       - frontend
-    platform: linux/amd64
     volumes:
       - ./app:/app
     depends_on:
@@ -40,7 +38,6 @@ services:
       dockerfile: ./etc/mysql/Dockerfile
     networks:
       - backend
-    platform: linux/amd64
     ports:
       - 3306:3306
     volumes:
@@ -53,7 +50,6 @@ services:
       dockerfile: ./etc/composer/Dockerfile
     networks:
       - backend
-    platform: linux/amd64
     volumes:
       - ./app:/app
     depends_on:

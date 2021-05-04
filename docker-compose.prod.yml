@@ -8,7 +8,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    platform: linux/amd64
     volumes:
       - var:/app/var
       - certbot-etc:/etc/letsencrypt
@@ -19,7 +18,6 @@ services:
     networks:
       - backend
       - frontend
-    platform: linux/amd64
     volumes:
       - var:/app/var
     depends_on:
@@ -31,7 +29,6 @@ services:
     image: ironex/mysql
     networks:
       - backend
-    platform: linux/amd64
     ports:
       - 3306:3306
     volumes:
@@ -41,7 +38,6 @@ services:
     image: ironex/composer
     networks:
       - backend
-    platform: linux/amd64
     volumes:
       - ./app:/app
     depends_on:
@@ -51,7 +47,6 @@ services:
     image: ironex/certbot
     networks:
       - frontend
-    platform: linux/amd64
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
