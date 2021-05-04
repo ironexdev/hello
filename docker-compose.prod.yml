@@ -43,7 +43,7 @@ services:
     image: ironex/composer
     networks:
       - backend
-    restart: on-failure
+    restart: no
     volumes:
       - ./app:/app
 
@@ -53,7 +53,7 @@ services:
     image: ironex/certbot
     networks:
       - frontend
-    restart: on-failure
+    restart: no
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
