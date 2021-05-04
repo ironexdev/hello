@@ -40,16 +40,21 @@ services:
   composer:
     depends_on:
       - php-fpm
+    deploy:
+      restart_policy:
+        condition: none
     image: ironex/composer
     networks:
       - backend
-    restart: "no"
     volumes:
       - ./app:/app
 
   certbot:
     depends_on:
       - nginx
+    deploy:
+      restart_policy:
+        condition: none
     image: ironex/certbot
     networks:
       - frontend
