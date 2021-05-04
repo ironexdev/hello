@@ -63,6 +63,8 @@ networks:
   frontend:
 
 volumes:
+  certbot-etc:
+  certbot-var:
   mysql:
   var:
   vendor:
