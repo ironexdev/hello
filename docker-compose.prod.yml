@@ -6,7 +6,6 @@ services:
     networks:
       - backend
       - frontend
-    restart: on-failure
     volumes:
       - var:/app/var
 
@@ -19,7 +18,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    restart: on-failure
     volumes:
       - var:/app/var
       - certbot-etc:/etc/letsencrypt
@@ -33,7 +31,6 @@ services:
       - backend
     ports:
       - 3306:3306
-    restart: on-failure
     volumes:
       - mysql:/var/lib/mysql
 
@@ -58,7 +55,6 @@ services:
     image: ironex/certbot
     networks:
       - frontend
-    restart: "no"
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
