@@ -10,7 +10,9 @@ services:
       - 443:443
     platform: linux/amd64
     volumes:
-    - var:/app/var
+      - var:/app/var
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
 
   php-fpm:
     image: ironex/php-fpm
@@ -19,13 +21,14 @@ services:
       - frontend
     platform: linux/amd64
     volumes:
-    - var:/app/var
-    - vendor:/app/vendor
+      - var:/app/var
+    depends_on:
+      - nginx
 
   mysql:
     environment:
       MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
-      image: ironex/mysql
+    image: ironex/mysql
     networks:
       - backend
     platform: linux/amd64
@@ -34,10 +37,32 @@ services:
     volumes:
       - mysql:/var/lib/mysql
 
+  composer:
+    image: ironex/composer
+    networks:
+      - backend
+    platform: linux/amd64
+    volumes:
+      - ./app:/app
+    depends_on:
+      - php-fpm
+
+  certbot:
+    image: ironex/composer
+    networks:
+      - frontend
+    platform: linux/amd64
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - nginx
+
 networks:
   backend:
   frontend:
 
 volumes:
+  mysql:
   var:
   vendor:

@@ -36,15 +36,7 @@ jobs:
         with:
           file: ./etc/php-fpm/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php-fpm:latest   
-          
-      - name: Build and push ironex/composer
-        id: docker_build_ironex_composer
-        uses: docker/build-push-action@v2
-        with:
-          file: ./etc/composer/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/composer:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php-fpm:latest
 
       - name: Build and push ironex/mysql
         id: docker_build_ironex_mysql
@@ -54,13 +46,21 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mysql:latest
           
-      - name: Build and push ironex/adminer
-        id: docker_build_ironex_adminer
+      - name: Build and push ironex/composer
+        id: docker_build_ironex_composer
         uses: docker/build-push-action@v2
         with:
-          file: ./etc/adminer/Dockerfile
+          file: ./etc/composer/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/adminer:latest          
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/composer:latest
 
+      - name: Build and push ironex/certbot
+        id: docker_build_ironex_certbot
+        uses: docker/build-push-action@v2
+        with:
+          file: ./etc/certbot/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/certbot:latest
+           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
