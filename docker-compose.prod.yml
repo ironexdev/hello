@@ -1,6 +1,15 @@
 version: "3.9"
 
 services:
+  php-fpm:
+    image: ironex/php-fpm
+    networks:
+      - backend
+      - frontend
+    restart: on-failure
+    volumes:
+      - var:/app/var
+
   nginx:
     depends_on:
       - php-fpm
@@ -15,15 +24,6 @@ services:
       - var:/app/var
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-
-  php-fpm:
-    image: ironex/php-fpm
-    networks:
-      - backend
-      - frontend
-    restart: on-failure
-    volumes:
-      - var:/app/var
 
   mysql:
     environment:
