@@ -1,3 +1,6 @@
+deploy:
+	@docker stack deploy --compose-file docker-compose.prod.yml hello
+
 composer:
 	@docker run --rm --interactive --tty --volume $$PWD/app:/app --platform=linux/amd64 ironex/composer $(action)
 

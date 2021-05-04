@@ -48,7 +48,7 @@ services:
       - php-fpm
 
   certbot:
-    image: ironex/composer
+    image: ironex/certbot
     networks:
       - frontend
     platform: linux/amd64
