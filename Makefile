@@ -1,5 +1,9 @@
+deploy:
+	@docker stack deploy hello -c docker-compose.prod.yml
+
+# Volume has to be prefixed with stack name (hello)
 tls-cert:
-	@docker run --rm -p 443:443 -p 80:80 -v certbot:/etc/letsencrypt ironex/certbot certonly -n -m "info@by-ironex.com" -d hello.by-ironex.com --standalone --agree-tos
+	@docker run --rm -p 443:443 -p 80:80 -v hello_certbot:/etc/letsencrypt ironex/certbot certonly -n -m "info@by-ironex.com" -d hello.by-ironex.com --standalone --agree-tos
 
 composer:
 	@docker run --rm --interactive --tty --volume $$PWD/app:/app ironex/composer $(action)

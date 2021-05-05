@@ -35,6 +35,7 @@ networks:
   backend:
   frontend:
 
+# Volumes are prefixed with stack in when using docker stack deploy <stack> command
 volumes:
   certbot:
   mysql:
