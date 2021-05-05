@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./etc/php-fpm/Dockerfile
+    container_name: php-fpm
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - ./app:/app
+
   nginx:
     build:
       context: .
@@ -18,17 +29,6 @@ services:
       - ./etc/nginx/development/ssl:/etc/ssl
       - ./etc/nginx/development/default.conf:/etc/nginx/conf.d/default.conf
 
-  php-fpm:
-    container_name: php-fpm
-    build:
-      context: .
-      dockerfile: ./etc/php-fpm/Dockerfile
-    networks:
-      - backend
-      - frontend
-    volumes:
-      - ./app:/app
-
   mysql:
     build:
       context: .
@@ -38,22 +38,8 @@ services:
       MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
     networks:
       - backend
-    ports:
-      - 3306:3306
     volumes:
       - mysql:/var/lib/mysql
-
-  composer:
-    build:
-      context: .
-      dockerfile: ./etc/composer/Dockerfile
-    container_name: composer
-    depends_on:
-      - php-fpm
-    networks:
-      - backend
-    volumes:
-      - ./app:/app
 
 networks:
   backend:
@@ -61,4 +47,3 @@ networks:
 
 volumes:
   mysql:
-  testf:
