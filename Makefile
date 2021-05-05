@@ -1,3 +1,6 @@
+shutdown:
+	@docker stack rm hello
+
 deploy:
 	@docker stack deploy hello -c docker-compose.prod.yml
 
