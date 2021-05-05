@@ -1,8 +1,8 @@
-deploy:
-	@docker stack deploy --compose-file docker-compose.prod.yml hello
+tls-cert:
+	@docker run --rm -p 443:443 -p 80:80 -v certbot:/etc/letsencrypt ironex/certbot certonly -n -m "info@by-ironex.com" -d hello.by-ironex.com --standalone --agree-tos
 
 composer:
-	@docker run --rm --interactive --tty --volume $$PWD/app:/app --platform=linux/amd64 ironex/composer $(action)
+	@docker run --rm --interactive --tty --volume $$PWD/app:/app ironex/composer $(action)
 
 remove-containers:
 	@docker container rm $(docker ps -aq) --force

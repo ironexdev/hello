@@ -20,8 +20,7 @@ services:
       - 443:443
     volumes:
       - var:/app/var
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
+      - certbot:/etc/letsencrypt
 
   mysql:
     environment:
@@ -29,43 +28,15 @@ services:
     image: ironex/mysql
     networks:
       - backend
-    ports:
-      - 3306:3306
     volumes:
       - mysql:/var/lib/mysql
-
-  composer:
-    depends_on:
-      - php-fpm
-    deploy:
-      restart_policy:
-        condition: none
-    image: ironex/composer
-    networks:
-      - backend
-    volumes:
-      - ./app:/app
-
-  certbot:
-    depends_on:
-      - nginx
-    deploy:
-      restart_policy:
-        condition: none
-    image: ironex/certbot
-    networks:
-      - frontend
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
 
 networks:
   backend:
   frontend:
 
 volumes:
-  certbot-etc:
-  certbot-var:
+  certbot:
   mysql:
   var:
   vendor:
