@@ -8,6 +8,7 @@ services:
       - frontend
     volumes:
       - var:/app/var
+      - vendor:/app/vendor
 
   nginx:
     depends_on:
@@ -40,3 +41,4 @@ volumes:
   certbot:
   mysql:
   var:
+  vendor:
