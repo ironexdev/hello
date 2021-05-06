@@ -9,7 +9,7 @@ tls-cert:
 	@docker run --rm -p 443:443 -p 80:80 -v hello_certbot:/etc/letsencrypt ironex/certbot certonly -n -m "info@by-ironex.com" -d hello.by-ironex.com --standalone --agree-tos
 
 composer:
-	@docker run --rm --interactive --tty --volume $$PWD/app:/app --volume vendor:/app/vendor ironex/composer $(action)
+	@docker run --rm --interactive --tty --volume $$PWD/app:/app --volume hello_vendor:/app/vendor ironex/composer $(action)
 
 remove-containers:
 	@docker container rm $(docker ps -aq) --force
