@@ -2,10 +2,16 @@ version: "3.9"
 
 services:
   php-fpm:
+    environment:
+      MYSQL_DATABASE: /run/secrets/mysql_database
+      MYSQL_PASSWORD: /run/secrets/mysql_password
+      MYSQL_SERVER: "mysql"
+      MYSQL_USER: /run/secrets/mysql_user
     image: ironex/php-fpm
     networks:
       - backend
       - frontend
+    platform: linux/amd64
     volumes:
       - var:/app/var
       - vendor:/app/vendor
@@ -19,16 +25,21 @@ services:
     ports:
       - 80:80
       - 443:443
+    platform: linux/amd64
     volumes:
       - var:/app/var
       - certbot:/etc/letsencrypt
 
   mysql:
     environment:
-      MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
+      MYSQL_DATABASE: /run/secrets/mysql_database
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_USER: /run/secrets/mysql_user
     image: ironex/mysql
     networks:
       - backend
+    platform: linux/amd64
     volumes:
       - mysql:/var/lib/mysql
 
@@ -36,7 +47,7 @@ networks:
   backend:
   frontend:
 
-# Volumes are prefixed with stack in when using docker stack deploy <stack> command
+# Volumes are prefixed with stack name (stack_volume) when using docker stack deploy <stack> command
 volumes:
   certbot:
   mysql:

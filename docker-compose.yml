@@ -6,9 +6,15 @@ services:
       context: .
       dockerfile: ./etc/php-fpm/Dockerfile
     container_name: php-fpm
+    environment:
+      MYSQL_DATABASE: "hello"
+      MYSQL_PASSWORD: "OLr/rb3+A3HQMpnyI1c/WAlf+rc="
+      MYSQL_SERVER: "mysql"
+      MYSQL_USER: "hello"
     networks:
       - backend
       - frontend
+    platform: linux/amd64
     volumes:
       - ./app:/app
 
@@ -24,6 +30,7 @@ services:
     ports:
       - 80:80
       - 443:443
+    platform: linux/amd64
     volumes:
       - ./app:/app
       - ./etc/nginx/development/ssl:/etc/ssl
@@ -35,9 +42,13 @@ services:
       dockerfile: ./etc/mysql/Dockerfile
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "StyKmBdAMAdhfppzr6"
+      MYSQL_DATABASE: "hello"
+      MYSQL_PASSWORD: "OLr/rb3+A3HQMpnyI1c/WAlf+rc="
+      MYSQL_ROOT_PASSWORD: "BCML9z2cL5e/gu6pzCbGrxuCa00="
+      MYSQL_USER: "hello"
     networks:
       - backend
+    platform: linux/amd64
     volumes:
       - mysql:/var/lib/mysql
 
