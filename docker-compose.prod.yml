@@ -11,7 +11,6 @@ services:
     networks:
       - backend
       - frontend
-    platform: linux/amd64
     volumes:
       - var:/app/var
       - vendor:/app/vendor
@@ -25,7 +24,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    platform: linux/amd64
     volumes:
       - var:/app/var
       - certbot:/etc/letsencrypt
@@ -39,7 +37,6 @@ services:
     image: ironex/mysql
     networks:
       - backend
-    platform: linux/amd64
     volumes:
       - mysql:/var/lib/mysql
 

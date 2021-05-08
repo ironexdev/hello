@@ -14,7 +14,6 @@ services:
     networks:
       - backend
       - frontend
-    platform: linux/amd64
     volumes:
       - ./app:/app
 
@@ -30,7 +29,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    platform: linux/amd64
     volumes:
       - ./app:/app
       - ./etc/nginx/development/ssl:/etc/ssl
