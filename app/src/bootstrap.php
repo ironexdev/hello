@@ -14,7 +14,7 @@ echo "<pre>";
 print_r($_ENV);
 echo "</pre>";
 
-echo file_get_contents($_ENV["MYSQL_DATABASE"]);
-echo file_get_contents($_ENV["MYSQL_PASSWORD"]);
-echo file_get_contents($_ENV["MYSQL_ROOT_PASSWORD"]);
-echo file_get_contents($_ENV["MYSQL_USER"]);
+echo file_get_contents($_ENV["MYSQL_DATABASE_FILE"]);
+echo file_get_contents($_ENV["MYSQL_PASSWORD_FILE"]);
+echo file_get_contents($_ENV["MYSQL_ROOT_PASSWORD_FILE"]);
+echo file_get_contents($_ENV["MYSQL_USER_FILE"]);
