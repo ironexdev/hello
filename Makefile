@@ -21,7 +21,7 @@ ifdef MYSQL_ROOT_PASSWORD
 	@echo $(MYSQL_PASSWORD) | docker secret create mysql_password -
 	@echo $(MYSQL_ROOT_PASSWORD) | docker secret create mysql_root_password -
 	@echo $(MYSQL_USER) | docker secret create mysql_user -
-	@echo Run "history -6--1" to clear the history # remove bash history
+	@echo Run "history -d -2--1" to clear the history # remove bash history
 else
 	@echo MYSQL_ROOT_PASSWORD is required
 endif
