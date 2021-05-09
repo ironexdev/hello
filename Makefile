@@ -16,14 +16,15 @@ deploy:
 	@docker stack deploy hello -c docker-compose.prod.yml
 
 secrets:
-	ifndef MYSQL_ROOT_PASSWORD # MYSQL_ROOT_PASSWORD has to be passed as script variable
-		$(error MYSQL_ROOT_PASSWORD is undefined)
-	endif
+ifdef MYSQL_ROOT_PASSWORD
 	@echo $(MYSQL_DATABASE) | docker secret create mysql_database -
 	@echo $(MYSQL_PASSWORD) | docker secret create mysql_password -
 	@echo $(MYSQL_ROOT_PASSWORD) | docker secret create mysql_root_password -
 	@echo $(MYSQL_USER) | docker secret create mysql_user -
 	@history -d -5--1 # remove bash history
+else
+	@echo MYSQL_ROOT_PASSWORD is required
+endif
 
 # Volume has to be prefixed with stack name (hello)
 tls-cert:
