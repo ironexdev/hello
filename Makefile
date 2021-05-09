@@ -15,8 +15,10 @@ shutdown:
 deploy:
 	@docker stack deploy hello -c docker-compose.prod.yml
 
-# MYSQL_ROOT_PASSWORD has to be passed as script variable
 secrets:
+	ifndef MYSQL_ROOT_PASSWORD # MYSQL_ROOT_PASSWORD has to be passed as script variable
+		$(error MYSQL_ROOT_PASSWORD is undefined)
+	endif
 	@echo $(MYSQL_DATABASE) | docker secret create mysql_database -
 	@echo $(MYSQL_PASSWORD) | docker secret create mysql_password -
 	@echo $(MYSQL_ROOT_PASSWORD) | docker secret create mysql_root_password -
