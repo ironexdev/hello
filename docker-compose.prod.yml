@@ -3,10 +3,10 @@ version: "3.9"
 services:
   php-fpm:
     environment:
-      MYSQL_DATABASE: /run/secrets/mysql_database
-      MYSQL_PASSWORD: /run/secrets/mysql_password
+      MYSQL_DATABASE_FILE: /run/secrets/mysql_database
       MYSQL_SERVER: "mysql"
-      MYSQL_USER: /run/secrets/mysql_user
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_USER_FILE: /run/secrets/mysql_user
     image: ironex/php-fpm
     networks:
       - backend

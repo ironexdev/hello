@@ -4,7 +4,6 @@ CERT_DOMAINS=hello.by-ironex.com
 #secrets
 MYSQL_DATABASE=$(shell openssl rand -base64 20)
 MYSQL_PASSWORD=$(shell openssl rand -base64 20)
-MYSQL_ROOT_PASSWORD=$(shell openssl rand -base64 20)
 MYSQL_USER=$(shell openssl rand -base64 20)
 #composer
 COMPOSER_IMAGE=ironex/composer
@@ -16,6 +15,7 @@ shutdown:
 deploy:
 	@docker stack deploy hello -c docker-compose.prod.yml
 
+# MYSQL_ROOT_PASSWORD has to be passed as script variable
 secrets:
 	@echo $(MYSQL_DATABASE) | docker secret create mysql_database -
 	@echo $(MYSQL_PASSWORD) | docker secret create mysql_password -
