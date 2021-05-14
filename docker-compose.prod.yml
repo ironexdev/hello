@@ -32,7 +32,6 @@ services:
     build:
       context: .
       dockerfile: ./etc/api-server/Dockerfile
-    container_name: hello_api-server
     depends_on:
       - php-fpm
     image: ironex/hello-api-server
