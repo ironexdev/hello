@@ -7,7 +7,7 @@ services:
       MYSQL_SERVER: "mysql"
       MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
       MYSQL_USER_FILE: /run/secrets/mysql_user
-    image: ironex/php-fpm
+    image: ironex/hello-php-fpm
     networks:
       - internal
     secrets:
@@ -50,7 +50,7 @@ services:
       MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
       MYSQL_USER: /run/secrets/mysql_user
-    image: ironex/mysql
+    image: ironex/hello-mysql
     networks:
       - internal
     secrets:
@@ -64,7 +64,7 @@ services:
   adminer:
     environment:
       ADMINER_DEFAULT_SERVER: mysql
-    image: ironex/adminer
+    image: ironex/hello-adminer
     networks:
       - internal
     ports:

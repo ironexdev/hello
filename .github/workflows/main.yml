@@ -22,45 +22,53 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build and push ironex/nginx
-        id: docker_build_ironex_nginx
+      - name: Build and push ironex/hello-http-proxy
+        id: docker_build_ironex_hello-http-proxy
         uses: docker/build-push-action@v2
         with:
-          file: ./etc/nginx/Dockerfile
+          file: ./etc/http-proxy/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:latest      
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-http-proxy:latest
 
-      - name: Build and push ironex/php-fpm
-        id: docker_build_ironex_php-fpm
+      - name: Build and push ironex/hello-api-server
+        id: docker_build_ironex_hello-api-server
+        uses: docker/build-push-action@v2
+        with:
+          file: ./etc/api-server/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-api-server:latest
+
+      - name: Build and push ironex/hello-php-fpm
+        id: docker_build_ironex_hello-php-fpm
         uses: docker/build-push-action@v2
         with:
           file: ./etc/php-fpm/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php-fpm:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-php-fpm:latest
 
-      - name: Build and push ironex/mysql
-        id: docker_build_ironex_mysql
+      - name: Build and push ironex/hello-mysql
+        id: docker_build_ironex_hello-mysql
         uses: docker/build-push-action@v2
         with:
           file: ./etc/mysql/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mysql:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-mysql:latest
           
-      - name: Build and push ironex/composer
-        id: docker_build_ironex_composer
+      - name: Build and push ironex/hello-composer
+        id: docker_build_ironex_hello-composer
         uses: docker/build-push-action@v2
         with:
           file: ./etc/composer/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/composer:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-composer:latest
 
-      - name: Build and push ironex/certbot
-        id: docker_build_ironex_certbot
+      - name: Build and push ironex/hello-certbot
+        id: docker_build_ironex_hello-certbot
         uses: docker/build-push-action@v2
         with:
           file: ./etc/certbot/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/certbot:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-certbot:latest
            
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
