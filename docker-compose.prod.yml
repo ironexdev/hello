@@ -9,8 +9,7 @@ services:
       MYSQL_USER_FILE: /run/secrets/mysql_user
     image: ironex/php-fpm
     networks:
-      - backend
-      - frontend
+      - internal
     secrets:
       - mysql_database
       - mysql_password
@@ -19,18 +18,31 @@ services:
       - var:/app/var
       - vendor:/app/vendor
 
-  nginx:
-    depends_on:
-      - php-fpm
-    image: ironex/nginx
+  http-proxy:
+    build:
+      context: .
+      dockerfile: ./etc/http-proxy/Dockerfile
+    container_name: hello_http-proxy
     networks:
-      - frontend
+      - external
     ports:
       - 80:80
       - 443:443
     volumes:
-      - var:/app/var
       - certbot:/etc/letsencrypt
+
+  api-server:
+    build:
+      context: .
+      dockerfile: ./etc/api-server/Dockerfile
+    container_name: hello_api-server
+    depends_on:
+      - php-fpm
+    networks:
+      - external
+      - internal
+    volumes:
+      - var:/app/var
 
   mysql:
     environment:
@@ -40,7 +52,7 @@ services:
       MYSQL_USER: /run/secrets/mysql_user
     image: ironex/mysql
     networks:
-      - backend
+      - internal
     secrets:
       - mysql_database
       - mysql_password
@@ -49,9 +61,18 @@ services:
     volumes:
       - mysql:/var/lib/mysql
 
+  adminer:
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+    image: ironex/adminer
+    networks:
+      - internal
+    ports:
+      - 8080:8080
+
 networks:
-  backend:
-  frontend:
+  internal:
+  external:
 
 secrets:
   mysql_database:

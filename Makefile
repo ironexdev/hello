@@ -9,6 +9,9 @@ MYSQL_USER=$(shell openssl rand -base64 20)
 COMPOSER_IMAGE=ironex/composer
 COMPOSER_VENDOR_VOLUME=hello_vendor
 
+update:
+	docker service update --force --image $(image) $(service)
+
 shutdown:
 	@docker stack rm hello
 
