@@ -19,10 +19,7 @@ services:
       - vendor:/app/vendor
 
   http-proxy:
-    build:
-      context: .
-      dockerfile: ./etc/http-proxy/Dockerfile
-    container_name: hello_http-proxy
+    image: ironex/hello-http-proxy
     networks:
       - external
     ports:
@@ -38,6 +35,7 @@ services:
     container_name: hello_api-server
     depends_on:
       - php-fpm
+    image: ironex/hello-api-server
     networks:
       - external
       - internal
